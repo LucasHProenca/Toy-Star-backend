@@ -22,6 +22,7 @@ export interface UserModel {
 
 export interface ProductDB {
     id: string,
+    creator_id: string,
     name: string,
     price: number,
     description: string,

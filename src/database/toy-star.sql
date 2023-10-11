@@ -10,10 +10,14 @@ CREATE TABLE users(
 
 CREATE TABLE products(
     id TEXT PRIMARY KEY UNIQUE NOT NULL,
+    creator_id TEXT NOT NULL,
     name TEXT NOT NULL,
     price REAL NOT NULL,
     description TEXT NOT NULL,
-    image_url TEXT NOT NULL
+    image_url TEXT NOT NULL,
+    FOREIGN KEY(creator_id) REFERENCES users(id)
+    ON UPDATE CASCADE
+    ON DELETE CASCADE
 );
 
 CREATE TABLE purchases(
@@ -25,6 +29,8 @@ CREATE TABLE purchases(
      ON UPDATE CASCADE
      ON DELETE CASCADE
 );
+
+DROP TABLE "products";
 
 CREATE TABLE purchases_products(
     purchase_id TEXT NOT NULL,
@@ -55,3 +61,5 @@ VALUES
 ("u001", "Lucas", "lucas@email.com", "Lucas08*", "ADMIN");
 
 SELECT * FROM users;
+
+SELECT * FROM products;
