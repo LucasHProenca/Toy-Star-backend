@@ -57,6 +57,29 @@ export interface PurchaseModel {
     }
 }
 
+export interface PurchaseProductsDB {
+    purchase_id: string,
+    product_id: string,
+    quantity: number
+}
+
+export interface PurchaseProductsModel {
+    purchase_id: string,
+    buyer_id: string,
+    buyer_name: string,
+    buyer_email: string,
+    total_price: number,
+    created_at: string,
+    products: {
+        id: string,
+        name: string,
+        price: number,
+        description: string,
+        imageUrl: string,
+        quantity: number
+    }
+}
+
 // export interface ProductDBWithCreatorName {
 //     id: string,
 //     creator_id: string,

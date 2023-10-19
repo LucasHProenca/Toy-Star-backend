@@ -6,8 +6,6 @@ export class Purchases {
         private id: string,
         private buyer: string,
         private totalPrice: number,
-        private productId: string,
-        private productQuantity: number,
         private createdAt: string
     ) {}
 
@@ -21,14 +19,6 @@ export class Purchases {
 
     public getTotalPrice(): number {
         return this.totalPrice
-    }
-
-    public getProductId(): string {
-        return this.productId
-    }
-
-    public getProductQuantity(): number {
-        return this.productQuantity
     }
 
     public getCreatedAt(): string {
@@ -47,14 +37,6 @@ export class Purchases {
         this.totalPrice = value
     }
 
-    public setProductId(value: string): void {
-        this.productId = value
-    }
-
-    public setProductQuantity(value: number): void {
-        this.productQuantity = value
-    }
-
     public setCreatedAt(value: string): void {
         this.createdAt = value
     }
@@ -68,14 +50,14 @@ export class Purchases {
         }
     }
 
-    public toPurchaseModel(): PurchaseModel {
-        return {
-            id: this.id,
-            buyer: this.buyer,
-            products: {
-                id: this.productId,
-                quantity: this.productQuantity
-            }
-        }
-    }
+    // public toPurchaseModel(): PurchaseModel {
+    //     return {
+    //         id: this.id,
+    //         buyer: this.buyer,
+    //         products: {
+    //             id: this.productId,
+    //             quantity: this.productQuantity
+    //         }
+    //     }
+    // }
 }

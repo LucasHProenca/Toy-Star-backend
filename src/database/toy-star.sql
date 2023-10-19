@@ -30,7 +30,7 @@ CREATE TABLE purchases(
      ON DELETE CASCADE
 );
 
-DROP TABLE "products";
+DROP TABLE "purchases";
 
 CREATE TABLE purchases_products(
     purchase_id TEXT NOT NULL,
@@ -63,3 +63,7 @@ VALUES
 SELECT * FROM users;
 
 SELECT * FROM products;
+
+SELECT * FROM purchases;
+
+SELECT * FROM purchases_products;
