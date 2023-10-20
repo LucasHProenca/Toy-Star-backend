@@ -24,19 +24,25 @@ export class PurchaseBusiness {
     ) { }
 
     public getPurchase = async (input: GetPurchaseInputDTO): Promise<GetPurchaseOutputDTO> => {
-        const {purchase_id, token} = input
+        const { purchase_id, token } = input
         const payload = this.tokenManager.getPayload(token)
-        if (!payload) {
-            throw new UnauthorizedError()
+        if(payload === null) {
+            throw new BadRequestError("Token inválido")
         }
 
         const purchasesModel: PurchaseProductsModel[] = []
-        const purchasesDB = await this.purchaseProductsDatabase.findPurchasesProducts(purchase_id)
-        console.log(purchasesDB)
+        const purchasesDB = await this.purchaseDatabase.findPurchases(purchase_id)
+        // console.log(purchasesDB)
 
         for (let purchaseDB of purchasesDB) {
-            const userIdExists = await this.userDatabase.findUserById(payload.id)
-            const productIdExists = await this.productDatabase.findProduct(purchaseDB.product_id)
+            const userIdExists = await this.userDatabase.findUserById(purchaseDB.buyer)
+            const purchaseProducts = await this.purchaseProductsDatabase.findPurchaseProducts(purchaseDB.id)
+
+            if(!purchaseProducts) {
+                throw new NotFoundError("Purchase não existe")
+            }
+
+            const productIdExists = await this.productDatabase.findProduct(purchaseProducts.product_id)
 
             if(!userIdExists) {
                 throw new BadRequestError("Compra com usuário não identificado")
@@ -46,30 +52,30 @@ export class PurchaseBusiness {
                 throw new BadRequestError("Produto não existe")
             }
 
-            const purchaseIdExists = await this.purchaseDatabase.findPurchase(purchaseDB.purchase_id)
+            // const purchaseIdExists = await this.purchaseDatabase.findPurchase(purchaseDB.purchase_id)
 
-            if(!purchaseIdExists) {
-                throw new BadRequestError("Compra não existe")
-            }
+            // if(!purchaseIdExists) {
+            //     throw new BadRequestError("Compra não existe")
+            // }
 
             const purchase = new PurchasesProducts(
                 purchase_id,
                 userIdExists.id,
                 userIdExists.nickname,
                 userIdExists.email,
-                purchaseIdExists.total_price,
-                purchaseIdExists.created_at,
+                purchaseDB.total_price,
+                purchaseDB.created_at,
                 productIdExists.id,
                 productIdExists.name,
                 productIdExists.price,
                 productIdExists.description,
                 productIdExists.image_url,
-                purchaseDB.quantity
+                purchaseProducts.quantity
             )
 
             purchasesModel.push(purchase.toPurchaseProductsModel())
         }
-        // console.log(purchasesModel)
+        console.log(purchasesModel)
         const output: GetPurchaseOutputDTO = purchasesModel
         // console.log(output)
         return output
