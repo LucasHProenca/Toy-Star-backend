@@ -31,53 +31,45 @@ export class PurchaseBusiness {
         }
 
         const purchasesModel: PurchaseProductsModel[] = []
-        const purchasesDB = await this.purchaseDatabase.findPurchases(purchase_id)
-        // console.log(purchasesDB)
+        const purchasesDB = await this.purchaseProductsDatabase.findPurchasesProducts(purchase_id)
+        const userIdExists = await this.userDatabase.findUserById(payload.id)
+
+        if(!userIdExists) {
+            throw new BadRequestError("Compra com usuário não identificado")
+        }
 
         for (let purchaseDB of purchasesDB) {
-            const userIdExists = await this.userDatabase.findUserById(purchaseDB.buyer)
-            const purchaseProducts = await this.purchaseProductsDatabase.findPurchaseProducts(purchaseDB.id)
+            
+            const purchaseIdExists = await this.purchaseDatabase.findPurchase(purchaseDB.purchase_id)
 
-            if(!purchaseProducts) {
+            if(!purchaseIdExists) {
                 throw new NotFoundError("Purchase não existe")
             }
 
-            const productIdExists = await this.productDatabase.findProduct(purchaseProducts.product_id)
-
-            if(!userIdExists) {
-                throw new BadRequestError("Compra com usuário não identificado")
-            }
+            const productIdExists = await this.productDatabase.findProduct(purchaseDB.product_id)
 
             if(!productIdExists) {
                 throw new BadRequestError("Produto não existe")
             }
-
-            // const purchaseIdExists = await this.purchaseDatabase.findPurchase(purchaseDB.purchase_id)
-
-            // if(!purchaseIdExists) {
-            //     throw new BadRequestError("Compra não existe")
-            // }
 
             const purchase = new PurchasesProducts(
                 purchase_id,
                 userIdExists.id,
                 userIdExists.nickname,
                 userIdExists.email,
-                purchaseDB.total_price,
-                purchaseDB.created_at,
+                purchaseIdExists.total_price,
+                purchaseIdExists.created_at,
                 productIdExists.id,
                 productIdExists.name,
                 productIdExists.price,
                 productIdExists.description,
                 productIdExists.image_url,
-                purchaseProducts.quantity
+                purchaseDB.quantity
             )
 
             purchasesModel.push(purchase.toPurchaseProductsModel())
         }
-        console.log(purchasesModel)
         const output: GetPurchaseOutputDTO = purchasesModel
-        // console.log(output)
         return output
     }
 
@@ -92,16 +84,7 @@ export class PurchaseBusiness {
 
         const id = this.idGenerator.generate()
 
-        // if(id) {
-        //     throw new NotFoundError("Purchase id já cadastrada")
-        // }
-
-        // const purchase = await this.purchaseDatabase.findPurchase(id)
         const user = await this.userDatabase.findUserById(payload.id)
-
-        // if(purchase) {
-        //     throw new BadRequestError("Purchase já existe")
-        // }
 
         if (!user) {
             throw new NotFoundError("Usuario não cadastrado")
