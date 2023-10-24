@@ -23,54 +23,20 @@ export class PurchaseBusiness {
         private idGenerator: IdGenerator
     ) { }
 
-    public getPurchase = async (input: GetPurchaseInputDTO): Promise<GetPurchaseOutputDTO> => {
+    public getPurchase = async (input: GetPurchaseInputDTO): Promise<any> => {
         const { purchase_id, token } = input
         const payload = this.tokenManager.getPayload(token)
-        if(payload === null) {
+        if (payload === null) {
             throw new BadRequestError("Token inválido")
         }
 
-        const purchasesModel: PurchaseProductsModel[] = []
-        const purchasesDB = await this.purchaseProductsDatabase.findPurchasesProducts(purchase_id)
-        const userIdExists = await this.userDatabase.findUserById(payload.id)
+        const purchasesDB = await this.purchaseProductsDatabase.findPurchasesById(purchase_id)
 
-        if(!userIdExists) {
-            throw new BadRequestError("Compra com usuário não identificado")
+        if (!purchasesDB) {
+            throw new BadRequestError("Informações invalidas")
         }
-
-        for (let purchaseDB of purchasesDB) {
-            
-            const purchaseIdExists = await this.purchaseDatabase.findPurchase(purchaseDB.purchase_id)
-
-            if(!purchaseIdExists) {
-                throw new NotFoundError("Purchase não existe")
-            }
-
-            const productIdExists = await this.productDatabase.findProduct(purchaseDB.product_id)
-
-            if(!productIdExists) {
-                throw new BadRequestError("Produto não existe")
-            }
-
-            const purchase = new PurchasesProducts(
-                purchase_id,
-                userIdExists.id,
-                userIdExists.nickname,
-                userIdExists.email,
-                purchaseIdExists.total_price,
-                purchaseIdExists.created_at,
-                productIdExists.id,
-                productIdExists.name,
-                productIdExists.price,
-                productIdExists.description,
-                productIdExists.image_url,
-                purchaseDB.quantity
-            )
-
-            purchasesModel.push(purchase.toPurchaseProductsModel())
-        }
-        const output: GetPurchaseOutputDTO = purchasesModel
-        return output
+       
+        return purchasesDB
     }
 
     public createPurchase = async (input: CreatePurchaseInputDTO): Promise<CreatePurchaseOutputDTO> => {

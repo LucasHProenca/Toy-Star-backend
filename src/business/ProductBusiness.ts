@@ -4,7 +4,7 @@ import { ProductDatabase } from "../database/ProductDatabase"
 import { UserDatabase } from "../database/UsersDatabase"
 import { GetProductInputDTO, GetProductOutputDTO } from "../dtos/productsDtos/getProduct.dto"
 import { BadRequestError } from "../errors/BadRequestError"
-import { ProductDB, ProductModel } from "../types"
+import { LikesDB, ProductDB, ProductModel, PRODUCT_LIKE } from "../types"
 import { Products } from "../models/Products"
 import { CreateProductInputDTO, CreateProductOutputDTO } from "../dtos/productsDtos/createProduct.dto"
 import { EditProductInputDTO } from "../dtos/productsDtos/editProduct.dto"
@@ -13,6 +13,8 @@ import { NotFoundError } from "../errors/NotFoundError"
 import { ForbiddenError } from "../errors/ForbiddenError"
 import { DeleteProductInputDTO } from "../dtos/productsDtos/deleteProduct.dto"
 import { DeleteUserOutputDTO } from "../dtos/userDtos/deleteUser.dto"
+import { GetProductLikeInputDTO} from "../dtos/productsDtos/getFavoriteProduct.dto"
+import { PutLikeProductInputDTO, PutLikeProductOutputDTO } from "../dtos/productsDtos/putLikeProduct.dto"
 
 export class ProductBusiness {
     constructor(
@@ -158,4 +160,76 @@ export class ProductBusiness {
 
         return output
     }
+
+    public async getFavoriteProduct(input: GetProductLikeInputDTO): Promise<GetProductOutputDTO> {
+        const {product_id, token} = input
+
+        const payload = this.tokenManager.getPayload(token)
+
+        if(!payload) {
+            throw new BadRequestError("Token inválido")
+        }
+
+        const user = await this.userDatabase.findUserById(payload.id)
+        const product = await this.productDatabase.findProduct(product_id)
+
+        if(!user) {
+            throw new NotFoundError("'user' não encontrado")
+        }
+
+        if(!product) {
+            throw new NotFoundError("'product' não encontrado")
+        }
+
+        const searchInDb = {
+            user_id: user.id,
+            product_id: product.id
+        }
+
+        const output: GetProductOutputDTO = await this.productDatabase.getFavorites(searchInDb)
+        return output
+    }
+
+    public likeProduct = async (input: PutLikeProductInputDTO): Promise<PutLikeProductOutputDTO> => {
+        const {product_id, token, like} = input
+
+        const payload = this.tokenManager.getPayload(token)
+
+        if(!payload) {
+            throw new BadRequestError("Token inválido")
+        }
+
+        if (like !== undefined) {
+            if (typeof like !== "boolean") {
+                throw new BadRequestError("'like' deve ser do tipo boolean")
+            }
+        }
+
+        const productIdExists = await this.productDatabase.findProduct(product_id)
+
+        if(!productIdExists) {
+            throw new NotFoundError("Produto não encontrado")
+        }
+
+        const likeSQlite = like? 1:0
+
+        const likesDB: LikesDB = {
+            user_id: payload.id,
+            product_id: product_id,
+            like: likeSQlite
+        }
+
+        const likeExists = await this.productDatabase.findLike(likesDB)
+
+        if(likeExists === PRODUCT_LIKE.ALREADY_LIKED) {
+            if(like) {
+                await this.productDatabase.removeLike(likesDB)
+            }
+    }else {
+        await this.productDatabase.insertLike(likesDB)
+    }
+
+    const output: PutLikeProductOutputDTO = undefined
+    return output
+}
 }

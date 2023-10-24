@@ -6,6 +6,8 @@ import { GetProductSchema } from "../dtos/productsDtos/getProduct.dto";
 import { CreateProductSchema } from "../dtos/productsDtos/createProduct.dto";
 import { EditProductSchema } from "../dtos/productsDtos/editProduct.dto";
 import { DeleteProductSchema } from "../dtos/productsDtos/deleteProduct.dto";
+import { GetProductLikeSchema } from "../dtos/productsDtos/getFavoriteProduct.dto";
+import { PutLikeProductSchema } from "../dtos/productsDtos/putLikeProduct.dto";
 
 export class ProductsController {
     constructor(
@@ -93,6 +95,51 @@ export class ProductsController {
                 token: req.headers.authorization
             })
             const output = await this.productBusiness.deleteProducts(input)
+
+            res.status(200).send(output)
+        } catch (error) {
+            console.log(error)
+
+            if (error instanceof ZodError) {
+                res.status(400).send(error.issues)
+            } else if (error instanceof BaseError) {
+                res.status(error.statusCode).send(error.message)
+            } else {
+                res.status(500).send("Erro inesperado")
+            }
+        }
+    }
+
+    public putLikeProduct = async (req: Request, res: Response) => {
+        try {
+            const input = PutLikeProductSchema.parse({
+                product_id: req.params.id,
+                token: req.headers.authorization,
+                like: req.body.like
+            })
+            const output = await this.productBusiness.likeProduct(input)
+
+            res.status(200).send(output)
+        } catch (error) {
+            console.log(error)
+
+            if (error instanceof ZodError) {
+                res.status(400).send(error.issues)
+            } else if (error instanceof BaseError) {
+                res.status(error.statusCode).send(error.message)
+            } else {
+                res.status(500).send("Erro inesperado")
+            }
+        }
+    }
+
+    public getFavoriteProducts = async (req: Request, res: Response) => {
+        try {
+            const input = GetProductLikeSchema.parse({
+                product_id: req.params.id,
+                token: req.headers.authorization
+            })
+            const output = await this.productBusiness.getFavoriteProduct(input)
 
             res.status(200).send(output)
         } catch (error) {

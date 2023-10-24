@@ -41,6 +41,16 @@ export interface ProductModel {
     }
 }
 
+export interface LikesDB {
+    user_id: string,
+    product_id: string,
+    like: number
+}
+
+export enum PRODUCT_LIKE {
+    ALREADY_LIKED = "ALREADY LIKED",
+}
+
 export interface PurchaseDB {
     id: string,
     buyer: string,
