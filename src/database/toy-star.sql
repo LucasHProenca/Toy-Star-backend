@@ -67,3 +67,5 @@ SELECT * FROM products;
 SELECT * FROM purchases;
 
 SELECT * FROM purchases_products;
+
+SELECT * FROM "likes_dislikesProducts";

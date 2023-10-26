@@ -37,11 +37,11 @@ export class ProductBusiness {
         const productsDB = await this.productDatabase.findProducts(q)
 
         for(let productDB of productsDB) {
-            const userIdExists = await this.userDatabase.findUserById(productDB.creator_id)
+            // const userIdExists = await this.userDatabase.findUserById(productDB.creator_id)
 
-            if(!userIdExists) {
-                throw new BadRequestError("Produto com criador não identificado")
-            }
+            // if(!userIdExists) {
+            //     throw new BadRequestError("Produto com criador não identificado")
+            // }
 
             const product = new Products(
                 productDB.id,
@@ -50,7 +50,7 @@ export class ProductBusiness {
                 productDB.description,
                 productDB.image_url,
                 productDB.creator_id,
-                userIdExists.nickname
+                payload.name
             )
 
             productsModel.push(product.toProductModel())
@@ -105,7 +105,7 @@ export class ProductBusiness {
         }
 
         if(payload.id !== productDB.creator_id) {
-            throw new ForbiddenError("Somente quem criou o post pode editá-lo")
+            throw new ForbiddenError("Somente quem criou o produto pode editá-lo")
         }
 
         const product = new Products(

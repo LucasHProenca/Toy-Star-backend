@@ -57,12 +57,12 @@ export class ProductDatabase extends BaseDatabase {
         }
     }
 
-    public removeLike = async(likeDB: LikesDB): Promise<void> => {
+    public removeLike = async (likeDB: LikesDB): Promise<void> => {
         await BaseDatabase.connection(ProductDatabase.TABLE_LIKES_DISLIKES).del()
-        .where({user_id: likeDB.user_id, product_id: likeDB.product_id})
+            .where({ user_id: likeDB.user_id, product_id: likeDB.product_id })
     }
 
-    public insertLike = async(likeDb: LikesDB): Promise<void> => {
+    public insertLike = async (likeDb: LikesDB): Promise<void> => {
         await BaseDatabase.connection(ProductDatabase.TABLE_LIKES_DISLIKES).insert(likeDb)
     }
 }

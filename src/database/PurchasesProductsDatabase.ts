@@ -33,9 +33,9 @@ export class PurchasesProductsDatabase extends BaseDatabase {
                 "=",
                 `${UserDatabase.TABLE_USERS}.id`
             )
-            .where({[`${PurchasesDatabase.TABLE_PURCHASES}.id`]: purchase_id})
+            .where({ [`${PurchasesDatabase.TABLE_PURCHASES}.id`]: purchase_id })
 
-            const products = await BaseDatabase.connection(PurchasesProductsDatabase.TABLE_PURCHASES_PRODUCTS)
+        const products = await BaseDatabase.connection(PurchasesProductsDatabase.TABLE_PURCHASES_PRODUCTS)
             .select(
                 `${ProductDatabase.TABLE_PRODUCTS}.id as id`,
                 `${ProductDatabase.TABLE_PRODUCTS}.name as name`,
@@ -50,11 +50,11 @@ export class PurchasesProductsDatabase extends BaseDatabase {
                 "=",
                 `${ProductDatabase.TABLE_PRODUCTS}.id`
             )
-            .where({[`${PurchasesProductsDatabase.TABLE_PURCHASES_PRODUCTS}.purchase_id`]: purchase_id})
+            .where({ [`${PurchasesProductsDatabase.TABLE_PURCHASES_PRODUCTS}.purchase_id`]: purchase_id })
 
-            const resultadinho = {...result, products}
+        const resultadinho = { ...result, products }
 
-            return resultadinho as PurchaseProductsModel | undefined
+        return resultadinho as PurchaseProductsModel | undefined
     }
 
     public async findPurchaseProducts(purchase_id: string): Promise<PurchaseProductsDB | undefined> {

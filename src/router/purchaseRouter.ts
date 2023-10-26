@@ -18,7 +18,7 @@ const purchaseController = new PurchasesController(
         new PurchasesDatabase(),
         new PurchasesProductsDatabase(),
         new TokenManager(),
-        new IdGenerator() 
+        new IdGenerator()
     )
 )
 

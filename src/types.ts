@@ -89,13 +89,3 @@ export interface PurchaseProductsModel {
         quantity: number
     }
 }
-
-// export interface ProductDBWithCreatorName {
-//     id: string,
-//     creator_id: string,
-//     name: string,
-//     price: string,
-//     description: string,
-//     image_url: string,
-//     creator_name: string
-// }

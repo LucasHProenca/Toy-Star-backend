@@ -38,7 +38,6 @@ export class PurchasesController {
                 products: req.body.products,
                 token: req.headers.authorization
             })
-
             const output = await this.purchasesBusiness.createPurchase(input)
 
             res.status(201).send(output)

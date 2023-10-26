@@ -7,7 +7,7 @@ export class Purchases {
         private buyer: string,
         private totalPrice: number,
         private createdAt: string
-    ) {}
+    ) { }
 
     public getId(): string {
         return this.id

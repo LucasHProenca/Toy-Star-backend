@@ -11,7 +11,6 @@ import { PurchasesProducts } from "../models/PurchasesProducts";
 import { PurchasesProductsDatabase } from "../database/PurchasesProductsDatabase";
 import { BadRequestError } from "../errors/BadRequestError";
 import { GetPurchaseInputDTO, GetPurchaseOutputDTO } from "../dtos/purchasesDtos/getPurchase.dto";
-import { PurchaseProductsModel } from "../types";
 
 export class PurchaseBusiness {
     constructor(
@@ -35,7 +34,7 @@ export class PurchaseBusiness {
         if (!purchasesDB) {
             throw new BadRequestError("Informações invalidas")
         }
-       
+
         return purchasesDB
     }
 
@@ -78,7 +77,6 @@ export class PurchaseBusiness {
         )
 
         await this.purchaseDatabase.insertPurchase(newPurchase.toPurchaseDB())
-
 
         for (let prd of products) {
             const product = await this.productDatabase.findProduct(prd.id)
