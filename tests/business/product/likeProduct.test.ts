@@ -4,10 +4,10 @@ import { UserDatabaseMock } from "../../mocks/UserDatabaseMock"
 import { ProductBusiness } from "../../../src/business/ProductBusiness"
 import { ProductDatabaseMock } from "../../mocks/ProductDatabaseMock"
 import { IdGeneratorMock } from "../../mocks/IdGeneratorMock"
-import { DeleteProductSchema } from "../../../src/dtos/productsDtos/deleteProduct.dto"
 import { NotFoundError } from "../../../src/errors/NotFoundError"
+import { PutLikeProductSchema } from "../../../src/dtos/productsDtos/putLikeProduct.dto"
 
-describe("Testando deleteProducts", () => {
+describe("Testando likeProduct", () => {
     const productBusiness = new ProductBusiness(
         new ProductDatabaseMock(),
         new UserDatabaseMock(),
@@ -15,13 +15,14 @@ describe("Testando deleteProducts", () => {
         new IdGeneratorMock()
     )
 
-    test("deve deletar um produto", async () => {
-        const input = DeleteProductSchema.parse({
-            token: "token-mock-fulano",
-            id: "id-mock-product2"
+    test("deve dar like em um produto", async () => {
+        const input = PutLikeProductSchema.parse({
+            token: "token-mock-astrodev",
+            product_id: "id-mock-product2",
+            like: true
         })
 
-        const output = await productBusiness.deleteProducts(input)
+        const output = await productBusiness.likeProduct(input)
 
         expect(output).toBe(undefined)
     })
@@ -29,12 +30,13 @@ describe("Testando deleteProducts", () => {
     test("deve disparar um erro se o token não for válido", async () => {
         expect.assertions(2)
         try {
-            const input = DeleteProductSchema.parse({
+            const input = PutLikeProductSchema.parse({
                 token: "token-mock-fulan",
-                id: "id-mock-product1"
+                product_id: "id-mock-product1",
+                like: true
             })
 
-            await productBusiness.deleteProducts(input)
+            await productBusiness.likeProduct(input)
         } catch (error) {
             if (error instanceof BadRequestError) {
                 expect(error.statusCode).toBe(400),
@@ -46,32 +48,29 @@ describe("Testando deleteProducts", () => {
     test("deve disparar um erro se o id do produto não existir", async () => {
         expect.assertions(2)
         try {
-            const input = DeleteProductSchema.parse({
+            const input = PutLikeProductSchema.parse({
                 token: "token-mock-fulano",
-                id: "id-mock-product5",
+                product_id: "id-mock-product5",
+                like: true
             })
 
-            await productBusiness.deleteProducts(input)
+            await productBusiness.likeProduct(input)
         } catch (error) {
             if (error instanceof NotFoundError) {
                 expect(error.statusCode).toBe(404),
-                    expect(error.message).toBe("'Id' do produto não encontrado")
+                    expect(error.message).toBe("Produto não encontrado")
             }
         }
     })
+    test("deve inserir like num produto que já tinha like", async () => {
+        const input = PutLikeProductSchema.parse({
+            product_id: "id-mock-product2",
+            token: "token-mock-astrodev",
+            like: true
+        })
 
-    //   test("deve disparar um erro se o usuário tentar deletar um produto sem ser admin", async () => {
-    //     expect.assertions(1)
-    //     try {
-    //         const input = DeleteProductSchema.parse({
-    //             token:"token-mock-fulano",
-    //             id:"id-mock-product3"
-    //         })
-    //         await productBusiness.deleteProducts(input)
-    //     } catch (error) {
-    //         if(error instanceof ForbiddenError) {
-    //             expect(error.statusCode).toBe(403)
-    //         }
-    //     }
-    //   })
+        const output = await productBusiness.likeProduct(input)
+
+        expect(output).toBe(undefined)
+    })
 })

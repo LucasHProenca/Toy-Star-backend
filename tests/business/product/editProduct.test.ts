@@ -57,17 +57,17 @@ describe("Testando editProducts", () => {
                 id: "id-mock-product5",
                 name: "produto3"
             })
-      
+
             await productBusiness.editProduct(input)
         } catch (error) {
-            if(error instanceof NotFoundError) {
+            if (error instanceof NotFoundError) {
                 expect(error.statusCode).toBe(404),
-                expect(error.message).toBe("'Produto' não encontrado")
+                    expect(error.message).toBe("'Produto' não encontrado")
             }
         }
-      })
+    })
 
-      test("deve disparar um erro se o usuário não for o dono do produto", async () => {
+    test("deve disparar um erro se o usuário não for o dono do produto", async () => {
         expect.assertions(2)
         try {
             const input = EditProductSchema.parse({
@@ -75,13 +75,13 @@ describe("Testando editProducts", () => {
                 id: "id-mock-product2",
                 name: "produto3"
             })
-      
+
             await productBusiness.editProduct(input)
         } catch (error) {
-            if(error instanceof ForbiddenError) {
+            if (error instanceof ForbiddenError) {
                 expect(error.statusCode).toBe(403),
-                expect(error.message).toBe("Somente quem criou o produto pode editá-lo")
+                    expect(error.message).toBe("Somente quem criou o produto pode editá-lo")
             }
         }
-      })
+    })
 })
