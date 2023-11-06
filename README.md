@@ -20,16 +20,20 @@ Porém, não é restrita a apenas o uso da nossa loja, uma vez que é possível 
 ## ⚙️ Funcionalidades
 
 - [x] Empresas ou empreendedores individuais podem cadastrar seus produtos e compradores na API utilizando todas as requisições que temos a oferecer:
-  - [x] getAllUsers
-  - [x] getAllProducts
-  - [x] createUser
+  - [x] getUsers
+  - [x] signUp
+  - [x] login
+  - [x] editUser
+  - [x] deleteUser
+  - [x] getProducts
+  - [x] getProductsLike
   - [x] createProduct  
-  - [x] deleteUserById
-  - [x] deleteProductById
-  - [x] editProductById
-  - [x] createPurchase
+  - [x] editProduct
+  - [x] likeProduct
+  - [x] deleteProduct
   - [x] getPurchaseById
-  - [x] deletePurchaseById
+  - [x] createPurchase
+  - [x] deletePurchase
 
 ---
 
@@ -49,7 +53,7 @@ Além disto é bom ter um editor para trabalhar com o código como [VSCode](http
 $ git clone link-do-repositório-git
 
 # Acesse a pasta do projeto no terminal/cmd
-$ cd Labecommerce-back-end
+$ cd Toy-Start-backend
 
 # Para abrir o vsCode
 $ code .
