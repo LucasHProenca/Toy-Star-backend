@@ -331,6 +331,40 @@ Também é requerido o "id" específico do produto, para ser inserido no campo "
 ![delProdReq](https://github.com/LucasHProenca/Toy-Star-backend/assets/106993403/435a019c-4718-41a8-9a36-3c1fea05be52)
 
 
+#### getPurchaseById
+A requisição getPurchaseById tem apenas a funcionalidade de verificar quais itens foram comprados em certo pedido, onde é necessário enviar um "id" do pedido junto ao caminho da requisição, contudo, caso o mesmo não esteja dentro do banco de dados, nada acontecerá e o usuário será informado da inconformidade.
+
+![getPurReq](https://github.com/LucasHProenca/Toy-Star-backend/assets/106993403/da0f25fc-d734-4d6e-bbcd-58d53976cb6e)
+
+
+![getPurRes](https://github.com/LucasHProenca/Toy-Star-backend/assets/106993403/32454d3c-6f21-413c-9ea3-5aa143b2cf99)
+
+
+#### createPurchase
+A requisição createPurchase tem apenas a funcionalidade de criar um novo pedido, porém alguns dados precisam ser inseridos no corpo da requisição, são esses:
+
+"products" [
+
+{
+
+"id",
+
+"quantity".
+
+}
+
+]
+
+Entretanto é necessário também informar um token válido no campo "Authorization" na aba "Headers".
+
+![createPurReq](https://github.com/LucasHProenca/Toy-Star-backend/assets/106993403/98ac278f-5f57-4cbf-af4b-92fb0febbb5b)
+
+
+#### deletePurchase
+A requisição deletePurchase tem apenas a funcionalidade de cancelar um pedido, onde é necessário enviar um "id" de um pedido junto ao caminho da requisição, contudo, caso o mesmo não esteja dentro do banco de dados, a deleção não será realizada e o usuário será informado da inconformidade.
+
+![delPurReq](https://github.com/LucasHProenca/Toy-Star-backend/assets/106993403/11f1a932-8d87-44ce-82d1-eaa4a475da87)
+
 
 ---
 
