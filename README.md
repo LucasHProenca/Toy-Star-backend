@@ -153,7 +153,17 @@ CREATE TABLE likes_dislikesProducts(
 
 Lembre-se de configurar o arquivo .env como está feito no exemplo em .env.example
 
-![image](https://github.com/LucasHProenca/Labook/assets/106993403/d831941b-7f6a-45b1-ac00-2e82aec1b36c)
+```
+PORT=3003
+
+DB_FILE_PATH=./src/database/nome-do-arquivo.db
+
+JWT_KEY=minha-senha-segura-bananinha
+JWT_EXPIRES_IN=7d
+
+BCRYPT_COST=12
+
+```
 
 Feito isso acesse a documentação da [API](https://documenter.getpostman.com/view/27682612/2s9YXfcPWr) e clique em "Run in Postman" localizado no canto superior direito para abrir dentro do app.
 
