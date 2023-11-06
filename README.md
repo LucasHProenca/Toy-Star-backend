@@ -68,7 +68,7 @@ $ npm run dev
 
 ```
 
-Feito isso acesse a documentação da [API](https://documenter.getpostman.com/view/27682612/2s93zFWJwG) e clique em "Run in Postman" localizado no canto superior direito para abrir dentro do app.
+Feito isso acesse a documentação da [API](https://documenter.getpostman.com/view/27682612/2s9YXfcPWr) e clique em "Run in Postman" localizado no canto superior direito para abrir dentro do app.
 
 ### Requisições
 
