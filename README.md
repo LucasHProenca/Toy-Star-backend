@@ -257,56 +257,80 @@ Com o id em mãos, basta inseri-lo no campo "Path Variables" na aba "Params" jun
 ![delUReq](https://github.com/LucasHProenca/Toy-Star-backend/assets/106993403/a19c88c0-4254-4c7a-972a-01f806f5facb)
 
 
-#### deleteProductById
-A requisição deleteProductById tem apenas a funcionalidade de apagar um produto, onde é necessário enviar um "id" de um produto junto ao caminho da requisição, contudo, caso o mesmo não esteja dentro do banco de dados, a deleção não será realizada e o usuário será informado da inconformidade.
+#### getProducts
+A requisição getProducts permite ao usuário visualizar todos os produtos cadastrados no banco de dados, passando um token de autorização compátivel.
 
-![deleteProductByIdRequest](https://github.com/LucasHProenca/Labecommerce-back-end/assets/106993403/55defc99-6db7-45c3-bd44-515ab721e8a9)
-
-![deleteProductByIdResponse](https://github.com/LucasHProenca/Labecommerce-back-end/assets/106993403/da3e2efa-af32-48a0-b7c1-71364cbad681)
+![getProdReq](https://github.com/LucasHProenca/Toy-Star-backend/assets/106993403/e70a8e81-6cb9-4a4a-91b9-1b599bd010f9)
 
 
-#### editProductById
-A requisição deleteUserById tem apenas uma funcionalidade, onde torna-se possível editar um produto, caso o mesmo já esteja cadastrado no banco de dados.
-Para isso, é necessário passar um "id" junto ao caminho da requisição, feito isso, o usuário pode decidir quais dados quer editar e quais não quer.
-Com isso em mente, podemos concluir que, se, no corpo da requisição for passado apenas um "name" será alterado apenas esse campo no produto selecionado, isso é válido para todos os campos demonstrados no exemplo.
-
-![editProductByIdRequest](https://github.com/LucasHProenca/Labecommerce-back-end/assets/106993403/e73f4940-9908-453a-ba6a-3c9d6019c7a6)
-
-![editProductByIdResponse](https://github.com/LucasHProenca/Labecommerce-back-end/assets/106993403/027b90de-7ab5-4f31-bf5c-544d56045864)
+![getProdRes](https://github.com/LucasHProenca/Toy-Star-backend/assets/106993403/606c9b47-c08d-473b-86c9-3971bb67a467)
 
 
-#### createPurchase
-A requisição createPurchase tem apenas a funcionalidade de criar um novo pedido, porém alguns dados precisam ser inseridos no corpo da requisição, são esses:
+#### getProductLikes
+A requisição getProductLikes tem a função de retornar se o usuário favoritou aquele produto, caso tenha ocorrido, para isso é necessário:
 
-"id",
-"buyer",
-"products",
-"id",
-"quantity".
-Contudo, foram implementadas as seguintes restrições:
-Caso o "id" já tenha sido cadastrado em outra compra, não será possível concluir o pedido;
-Caso o "buyer" não se encontre na lista de usuários, não será possível concluir o pedido;
-Caso o "id" do produto não se encontre na lista de produtos, não será possível concluir o pedido.
+Verificar qual é o id do produto na requisição getProducts;
 
-![createPurchaseRequest](https://github.com/LucasHProenca/Labecommerce-back-end/assets/106993403/ab7439bf-a76d-487d-8e6a-9e07b89f88b7)
+Com o id em mãos, basta inseri-lo no campo "Path Variables" na aba "Params" junto ao token no campo "Authorization" na aba "Headers", e torna-se possível visualizar se houve interação.
 
-![createPurchaseResponse](https://github.com/LucasHProenca/Labecommerce-back-end/assets/106993403/dcd95a8f-e2f2-4d40-913d-ed4e301ddb10)
+![getProductLikesReq](https://github.com/LucasHProenca/Toy-Star-backend/assets/106993403/a2c0fbc1-e5f9-488f-8254-21d52b6b755a)
 
 
-#### getPurchaseById
-A requisição getPurchaseById tem apenas a funcionalidade de verificar quais itens foram comprados em certo pedido, onde é necessário enviar um "id" de um pedido junto ao caminho da requisição, contudo, caso o mesmo não esteja dentro do banco de dados, nada acontecerá e o usuário será informado da inconformidade.
-
-![getPurchaseByIdRequest](https://github.com/LucasHProenca/Labecommerce-back-end/assets/106993403/18249efc-7a9a-43c6-9426-573fa1a237fb)
-
-![getPurchaseByIdResponse](https://github.com/LucasHProenca/Labecommerce-back-end/assets/106993403/2d8304bb-cd9e-4f10-88a4-a4ecb6644765)
+![getProductLikesRes](https://github.com/LucasHProenca/Toy-Star-backend/assets/106993403/9668bfdb-3bad-49e8-9a12-86d0777594e3)
 
 
-#### deletePurchaseById
-A requisição deletePurchaseById tem apenas a funcionalidade de cancelar um pedido, onde é necessário enviar um "id" de um pedido junto ao caminho da requisição, contudo, caso o mesmo não esteja dentro do banco de dados, a deleção não será realizada e o usuário será informado da inconformidade.
+#### createProduct
+A requisição createProduct permite ao usuário criar um novo produto, porém alguns dados precisam ser inseridos no corpo da requisição, são esses:
 
-![deletePurchaseByIdRequest](https://github.com/LucasHProenca/Labecommerce-back-end/assets/106993403/20d0e2fc-4d5c-4ceb-8897-bd0babef2aa9)
+"name",
 
-![deletePurchaseByIdResponse](https://github.com/LucasHProenca/Labecommerce-back-end/assets/106993403/5b7292fe-ad11-40e0-acfe-735c0cf2df92)
+"price",
+
+"description",
+
+"imageUrl".
+
+Entretanto é necessário também informar um token válido no campo "Authorization" na aba "Headers".
+
+![createProdReq](https://github.com/LucasHProenca/Toy-Star-backend/assets/106993403/15f944ce-587d-48d0-a669-c0c53bbf500c)
+
+
+#### editProduct
+A requisição editProduct permite ao usuário editar todas as informações do seu produto, no entanto, algumas restrições foram implementadas para o uso dessa funcionalidade, são essas:
+
+Apenas o dono do produto pode editá-lo;
+
+Será necessário passar o token gerado no login para comprovar que a pessoa é realmente quem ela diz ser;
+
+Também é requerido o "id" específico do produto, para ser inserido no campo "Path Variables" na aba "Params" junto ao token no campo "Authorization" na aba "Headers", e torna-se possível editar a seu produto.
+
+![editProdReq](https://github.com/LucasHProenca/Toy-Star-backend/assets/106993403/7233faa8-a606-4837-b025-7c5d220549aa)
+
+
+#### likeProduct
+A requisição likeProduct tem uma funcionalidade, permitem ao usuário favoritar o produto, no entanto, algumas restrições foram implementadas para o uso dessa funcionalidade, são essas:
+
+Caso dê um like em um produto que já tenha dado like, o like é desfeito.
+
+Será necessário passar o token gerado no login para comprovar que a pessoa é realmente quem ela diz ser;
+
+Também é requerido o "id" específico do produto, para ser inserido no campo "Path Variables" na aba "Params" junto ao token no campo "Authorization" na aba "Headers", e torna-se possível favoritar o produto.
+
+![likeProductReq](https://github.com/LucasHProenca/Toy-Star-backend/assets/106993403/068830ea-33cb-47fa-8362-a1a4e799afaf)
+
+
+#### deleteProduct
+A requisição deleteProduct permite ao usuário excluir seu produto, no entanto, algumas restrições foram implementadas para o uso dessa funcionalidade, são essas:
+
+Apenas o dono da produto ou um administrador podem apagá-lo;
+
+Será necessário passar o token gerado no login para comprovar que a pessoa é realmente quem ela diz ser;
+
+Também é requerido o "id" específico do produto, para ser inserido no campo "Path Variables" na aba "Params" junto ao token no campo "Authorization" na aba "Headers", e torna-se possível deletar a seu produto.
+
+![delProdReq](https://github.com/LucasHProenca/Toy-Star-backend/assets/106993403/435a019c-4718-41a8-9a36-3c1fea05be52)
+
+
 
 ---
 
