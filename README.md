@@ -89,7 +89,7 @@ Caso tenha dado tudo certo, irá aparecer no menu do banco de dados o nome de su
 
 #### Inserindo as tabelas no banco de dados
 
-Para criar as tabelas, basta clicar em "execute" em cada um como mostram as imagens abaixo:
+Para criar as tabelas, basta clicar em "execute" em cada uma após montar esse código abaixo:
 
 ```
 CREATE TABLE users(
