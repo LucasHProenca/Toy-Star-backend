@@ -68,6 +68,42 @@ $ npm run dev
 
 ```
 
+#### ATENÇÃO!
+
+Caso seja a primeira vez que você está instalando essa extensão, talvez seja necessário instalar algumas dependências para o SQLite rodar em sua máquina. A própria extensão irá te avisar se for o caso e você precisará clicar no botão para instalá-las.
+Se não aparecer nenhum aviso ou deu tudo certo, pode prosseguir!
+
+##### Criando a conexão
+
+1. Dê um nome para a conexão
+2. Selecione o arquivo: **labeddit.db**
+3. Salve a conexão
+
+![image](https://github.com/LucasHProenca/Labook/assets/106993403/b0be9d2a-a2c3-4ede-9ba8-6f437ef6cf76)
+
+#### Verificando se deu certo
+
+Caso tenha dado tudo certo, irá aparecer no menu do banco de dados o nome de sua conexão junto com algumas informações.
+
+![image](https://github.com/LucasHProenca/Labook/assets/106993403/f76ad74d-190a-4292-825d-40833f919b62)
+
+#### Inserindo as tabelas no banco de dados
+
+Para criar as tabelas, basta clicar em "execute" em cada um como mostram as imagens abaixo:
+
+![image](https://github.com/LucasHProenca/Labeddit/assets/106993403/31931c44-22fe-4338-9d5c-852c7a060815)
+
+![image](https://github.com/LucasHProenca/Labook/assets/106993403/f2b4019e-30a6-4ae6-aa38-5c2839711b66)
+
+### 💾 Configurando o .env
+
+Lembre-se de configurar o arquivo .env como está feito no exemplo em .env.example
+
+![image](https://github.com/LucasHProenca/Labook/assets/106993403/d831941b-7f6a-45b1-ac00-2e82aec1b36c)
+
+Feito isso acesse a documentação da [API](https://documenter.getpostman.com/view/27682612/2s9Y5R36ij#ad2c5672-46e9-491f-aeca-96ac4e504ed1) e clique em "Run in Postman" localizado no canto superior direito para abrir dentro do app.
+
+
 Feito isso acesse a documentação da [API](https://documenter.getpostman.com/view/27682612/2s9YXfcPWr) e clique em "Run in Postman" localizado no canto superior direito para abrir dentro do app.
 
 ### Requisições
