@@ -80,7 +80,7 @@ Se não aparecer nenhum aviso ou deu tudo certo, pode prosseguir!
 ##### Criando a conexão
 
 1. Dê um nome para a conexão
-2. Selecione o arquivo: **labeddit.db**
+2. Selecione o arquivo: **toy-star.db**
 3. Salve a conexão
 
 ![image](https://github.com/LucasHProenca/Labook/assets/106993403/b0be9d2a-a2c3-4ede-9ba8-6f437ef6cf76)
