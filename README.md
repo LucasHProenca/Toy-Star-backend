@@ -91,18 +91,69 @@ Caso tenha dado tudo certo, irá aparecer no menu do banco de dados o nome de su
 
 Para criar as tabelas, basta clicar em "execute" em cada um como mostram as imagens abaixo:
 
-![image](https://github.com/LucasHProenca/Labeddit/assets/106993403/31931c44-22fe-4338-9d5c-852c7a060815)
+```
+CREATE TABLE users(
+    id TEXT PRIMARY KEY UNIQUE NOT NULL,
+    nickname TEXT UNIQUE NOT NULL,
+    email TEXT UNIQUE NOT NULL,
+    password TEXT NOT NULL,
+    role TEXT NOT NULL,
+    created_at TEXT DEFAULT(DATETIME()) NOT NULL
+);
 
-![image](https://github.com/LucasHProenca/Labook/assets/106993403/f2b4019e-30a6-4ae6-aa38-5c2839711b66)
+CREATE TABLE products(
+    id TEXT PRIMARY KEY UNIQUE NOT NULL,
+    creator_id TEXT NOT NULL,
+    name TEXT NOT NULL,
+    price REAL NOT NULL,
+    description TEXT NOT NULL,
+    image_url TEXT NOT NULL,
+    FOREIGN KEY(creator_id) REFERENCES users(id)
+    ON UPDATE CASCADE
+    ON DELETE CASCADE
+);
+
+CREATE TABLE purchases(
+    id TEXT PRIMARY KEY UNIQUE NOT NULL,
+    buyer TEXT NOT NULL,
+    total_price REAL NOT NULL,
+    created_at TEXT NOT NULL,
+    FOREIGN KEY (buyer) REFERENCES users(id)
+     ON UPDATE CASCADE
+     ON DELETE CASCADE
+);
+
+CREATE TABLE purchases_products(
+    purchase_id TEXT NOT NULL,
+    product_id TEXT NOT NULL,
+    quantity INTEGER NOT NULL,
+    FOREIGN KEY (purchase_id) REFERENCES purchases(id)
+    ON UPDATE CASCADE
+    ON DELETE CASCADE,
+    FOREIGN KEY (product_id) REFERENCES products(id)
+    ON UPDATE CASCADE
+    ON DELETE CASCADE
+);
+
+CREATE TABLE likes_dislikesProducts(
+    user_id TEXT NOT NULL,
+    product_id TEXT NOT NULL,
+    like INTEGER NOT NULL,
+    FOREIGN KEY(user_id) REFERENCES users(id)
+    ON UPDATE CASCADE
+    ON DELETE CASCADE,
+    FOREIGN KEY(product_id) REFERENCES products(id)
+    ON UPDATE CASCADE
+    ON DELETE CASCADE
+);
+
+```
 
 ### 💾 Configurando o .env
 
 Lembre-se de configurar o arquivo .env como está feito no exemplo em .env.example
 
 ![image](https://github.com/LucasHProenca/Labook/assets/106993403/d831941b-7f6a-45b1-ac00-2e82aec1b36c)
-
-Feito isso acesse a documentação da [API](https://documenter.getpostman.com/view/27682612/2s9Y5R36ij#ad2c5672-46e9-491f-aeca-96ac4e504ed1) e clique em "Run in Postman" localizado no canto superior direito para abrir dentro do app.
-
 
 Feito isso acesse a documentação da [API](https://documenter.getpostman.com/view/27682612/2s9YXfcPWr) e clique em "Run in Postman" localizado no canto superior direito para abrir dentro do app.
 
