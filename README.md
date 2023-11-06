@@ -6,6 +6,7 @@
  <a href="#-sobre-o-projeto">Sobre</a> •
  <a href="#-funcionalidades">Funcionalidades</a> •
  <a href="#-como-executar-a-api">Como executar</a> • 
+ <a href="#-testes-automatizados">Testes automatizados</a> • 
  <a href="#-tecnologias">Tecnologias</a> • 
  <a href="#-autor">Autor</a> • 
 </p>
@@ -298,6 +299,31 @@ A requisição deletePurchaseById tem apenas a funcionalidade de cancelar um ped
 ![deletePurchaseByIdRequest](https://github.com/LucasHProenca/Labecommerce-back-end/assets/106993403/20d0e2fc-4d5c-4ceb-8897-bd0babef2aa9)
 
 ![deletePurchaseByIdResponse](https://github.com/LucasHProenca/Labecommerce-back-end/assets/106993403/5b7292fe-ad11-40e0-acfe-735c0cf2df92)
+
+---
+
+## ✋ Testes automatizados
+
+Testar código é importantíssimo, pois quando o testamos estamos garantindo seu funcionamento.
+
+Por exemplo:
+
+- quando usamos o Postman para consumir um endpoint de nossa API
+- quando acessamos nosso app React e verificamos o funcionamento de um botão
+- quando damos console.log em uma parte do código para checar o dado
+
+Esses cenários demonstram o uso de testes manuais. Eles são rápidos de serem implementados, mas não carregam um processo automatizado de repetição, então sempre que for necessário testar novamente o mesmo código é preciso recriar todo o processo do zero pela pessoa.
+
+E se fosse possível criar um processo automatizado que testa a aplicação? É aqui que entram os testes automatizados!
+
+Nesse projeto o foco foi automatizar os testes da camada business, ao menos 70% dela, mas é claro, priorizando os pontos mais importantes, no entanto, como o código backend foi executado de forma clara e limpa, foi possível atingir a marca de 97,76% dos testes concluídos.
+
+![srcBusinessTestes](https://github.com/LucasHProenca/Toy-Star-backend/assets/106993403/503fe9a4-5266-428e-9efb-295abf098efa)
+
+![testesBusiness](https://github.com/LucasHProenca/Toy-Star-backend/assets/106993403/99b0e4a0-3ee7-4fbd-8abc-2c32040b2c77)
+
+
+E quanto aos 2,3% restantes? Vendo que essa não era a prioridade do projeto, foi decidido dar mais atenção a melhoria de outras funcionalidades.
 
 ---
 
