@@ -172,81 +172,89 @@ Feito isso acesse a documentação da [API](https://documenter.getpostman.com/vi
 
 #### ATENÇÃO! Todos os exemplos são fictícios, pois não haveria sentido em disponibilizarmos os dados de nossos clientes, portanto use essa API para construir a sua própria loja online.
 
-#### getAllUsers
-A requisição getAllUsers tem duas funcionalidades diferentes:
+#### getUsers
+A requisição getUsers tem a funcionalidade de mostrar a lista de usuários cadastrados no banco de dados, passando um token de autorização compátivel.
 
-Caso nada seja escrito após "/users", será retornada a lista completa de usuários cadastrados, como podemos ver no exemplo "getAllUsersF1";
-
-![getAllUsersF1Request](https://github.com/LucasHProenca/Labecommerce-back-end/assets/106993403/5424d632-891a-4d76-862c-4a27fae223c3)
-
-![getAllUsersF1Response](https://github.com/LucasHProenca/Labecommerce-back-end/assets/106993403/63d219a8-b2a8-405f-b005-3043c6e65b5a)
-
-Caso um usuário não cadastrado seja enviado como paramêtro, por exemplo, "/users?id=u010", será retornada uma lista vazia que é referenciada por [ ];
-Caso não seja inserido um "id" completo, será retornado todos os usuários que contenham os paramêtros inseridos;
-Caso um usuário cadastrado seja enviado como paramêtro, apenas ele será retornado, como podemos ver no exemplo "getAllUsersF2".
-
-![getAllUsersF2Request](https://github.com/LucasHProenca/Labecommerce-back-end/assets/106993403/e8d3b8cf-918d-49f6-a937-b0892360b25c)
-
-![getAllUsersF2Response](https://github.com/LucasHProenca/Labecommerce-back-end/assets/106993403/5e8859c4-1e98-4dac-9401-e1155e977167)
+![getUsersReq](https://github.com/LucasHProenca/Toy-Star-backend/assets/106993403/b116d34d-4a6c-4a24-b8d8-b2f9b7d44224)
 
 
-#### getAllProducts
-A requisição getAllProducts tem duas funcionalidades diferentes:
-
-Caso nada seja escrito após "/products", será retornada a lista completa de produtos cadastrados, como podemos ver no exemplo "getAllProductsF1";
-
-![getAllProductsF1Request](https://github.com/LucasHProenca/Labecommerce-back-end/assets/106993403/b7c9ffc1-b7f0-42b8-bcc0-b7cfe95f097d)
-
-![getAllProductsF1Response](https://github.com/LucasHProenca/Labecommerce-back-end/assets/106993403/1e4b9f30-ef7a-4bc0-b5a6-f2359482a260)
-
-Caso um produto não cadastrado seja enviado como paramêtro, por exemplo, "/products?name=escovaDeDente", será retornada uma lista vazia que é referenciada por [ ];
-Caso não seja inserido um "name" completo, será retornado todos os produtos que contenham os paramêtros inseridos;
-Caso um produto cadastrado seja enviado como paramêtro, apenas ele será retornado, como podemos ver no exemplo "getAllProductsF2".
-
-![getAllProductsF2Request](https://github.com/LucasHProenca/Labecommerce-back-end/assets/106993403/6635c622-f9fc-4fe6-b290-3cdf7d3350e9)
-
-![getAllProductsF2Response](https://github.com/LucasHProenca/Labecommerce-back-end/assets/106993403/9c7d0ad8-7a01-4919-9052-ac87c5047e8f)
+![getUsersRes](https://github.com/LucasHProenca/Toy-Star-backend/assets/106993403/0f3c4481-7d4d-4776-bcca-97bcfe62b333)
 
 
-#### createUser
-A requisição createUser tem apenas a funcionalidade de criar um novo usuário, porém alguns dados precisam ser inseridos no corpo da requisição, são esses:
+#### signUp
+A requisição signUp tem a funcionalidade de cadastrar uma nova conta, porém alguns dados precisam ser inseridos no corpo da requisição, são esses:
 
-"id",
-"name",
+"nickname",
+
 "email",
+
 "password".
+
 Contudo, foram implementadas as seguintes restrições:
-Caso o "id" já tenha sido cadastrado por outro usuário, não será possível concluir o cadastro;
-Caso o "email" já tenha sido cadastrado por outro usuário ou, não possua o formato de email "@email.com" não será possível concluir o cadastro;
-É obrigatório que o "password" tenha entre 8 e 12 caracteres, com letras maiúsculas e minúsculas e no mínimo um número e um caractere especial.
 
-![createUserRequest](https://github.com/LucasHProenca/Labecommerce-back-end/assets/106993403/42d905d3-2277-4a42-9eaa-03613f6a557c)
+Caso o "nickname" já tenha sido cadastrado por outro usuário, não será possível concluir o cadastro;
 
-![createUserResponse](https://github.com/LucasHProenca/Labecommerce-back-end/assets/106993403/69e437d2-97bf-46da-b0b4-02feb482afbd)
+Caso o "email" já tenha sido cadastrado por outro usuário, não será possível concluir o cadastro;
 
+Caso o "email" não esteja com a formatação correta (@email.com), não será possível concluir o cadastro;
 
-##### createProduct
-A requisição createProduct possui apenas a funcionalidade de criar um novo produto, porém alguns dados precisam ser inseridos no corpo da requisição, são esses:
+Caso a senha não atenda a um padrão mínimo pré-estabelecido, não será possível concluir o cadastro, no caso do Labeddit, é obrigatório que "password" tenha entre 8 e 12 caracteres, com letras maiúsculas e minúsculas, e no mínimo um caractere especial.
 
-"id",
-"name",
-"price",
-"description",
-"imageUrl".
-Contudo, foi implementada a seguinte restrição:
-Caso o "id" já tenha sido cadastrado por outro usuário, não será possível concluir o cadastro.
+Todos os usuários cadastrados vem com a "role" como "NORMAL" impedindo seu acesso a recursos que são reservados à administradores.
 
-![createProductRequest](https://github.com/LucasHProenca/Labecommerce-back-end/assets/106993403/cd7de88a-e7d8-4430-9441-b01852dbfe86)
+Como resposta da requisição, o usuário recebe um token de autorização, lembre-se de guardá-lo pois será necessário para acessar as outras funcionalidades do sistema.
 
-![createProductResponse](https://github.com/LucasHProenca/Labecommerce-back-end/assets/106993403/b2bcdcbe-eeac-423a-a44d-9a3541dca6c6)
+![signUpReq](https://github.com/LucasHProenca/Toy-Star-backend/assets/106993403/17bc0fc7-5c18-47e5-9e64-a59cab75d373)
 
 
-#### deleteUserById
-A requisição deleteUserById tem apenas a funcionalidade de apagar um usuário, onde é necessário enviar um "id" de um usuário junto ao caminho da requisição, contudo, caso o mesmo não esteja dentro do banco de dados, a deleção não será realizada e o usuário será informado da inconformidade.
+![signUpRes](https://github.com/LucasHProenca/Toy-Star-backend/assets/106993403/b237977a-b552-40ca-957e-0b3d04b6032b)
 
-![deleteUserByIdRequest](https://github.com/LucasHProenca/Labecommerce-back-end/assets/106993403/0df690e5-e949-4281-a741-71692831fa6d)
 
-![deleteUserByIdResponse](https://github.com/LucasHProenca/Labecommerce-back-end/assets/106993403/32b4eecc-3a74-46f9-b184-8bf2b941fe18)
+#### login
+A requisição login tem a funcionalidade de entrar na sua respectiva conta, porém alguns dados precisam ser inseridos no corpo da requisição, são esses:
+
+"email",
+
+"password".
+
+Contudo, foram implementadas as seguintes restrições:
+
+Caso o "email" e o "password" não correspondam com os utilizados no endpoint "signUp", não será possível acessar a conta.
+
+Como resposta da requisição, o usuário recebe um token de autorização, lembre-se de guardá-lo pois será necessário para acessar as outras funcionalidades do sistema.
+
+![loginReq](https://github.com/LucasHProenca/Toy-Star-backend/assets/106993403/a2909252-d8e4-4e95-b225-1733e9979d0e)
+
+
+![loginRes](https://github.com/LucasHProenca/Toy-Star-backend/assets/106993403/373f5445-3804-4e34-9fe1-bcd3765c4b29)
+
+
+##### editUser
+A requisição editUser permite ao usuário editar suas informações pessoais como "nickname", "email" e "password", no entanto, algumas restrições foram implementadas para o uso dessa funcionalidade, são essas:
+
+Apenas o dono da conta pode editar suas informações;
+
+Será necessário passar o token gerado no login para comprovar que a pessoa é realmente quem ela diz ser;
+
+Verificar qual é seu id na requisição getUsers;
+
+Com o id em mãos, basta inseri-lo no campo "Path Variables" na aba "Params" junto ao token no campo "Authorization" na aba "Headers", e torna-se possível editar as informações de cadastro citadas acima.
+
+![editUReq](https://github.com/LucasHProenca/Toy-Star-backend/assets/106993403/bea92a62-9747-4aea-93bf-efa2faea23ff)
+
+
+#### deleteUser
+A requisição deleteUser permite ao usuário excluir sua conta, no entanto, algumas restrições foram implementadas para o uso dessa funcionalidade, são essas:
+
+Apenas o dono da conta ou um administrador podem apagar um usuário;
+
+Será necessário passar o token gerado no login para comprovar que a pessoa é realmente quem ela diz ser;
+
+Caso o usuário queira apagar sua própria conta, será necessário verificar qual é seu id na requisição getUsers;
+
+Com o id em mãos, basta inseri-lo no campo "Path Variables" na aba "Params" junto ao token no campo "Authorization" na aba "Headers", e torna-se possível apagar o cadastro do usuário.
+
+![delUReq](https://github.com/LucasHProenca/Toy-Star-backend/assets/106993403/a19c88c0-4254-4c7a-972a-01f806f5facb)
 
 
 #### deleteProductById
