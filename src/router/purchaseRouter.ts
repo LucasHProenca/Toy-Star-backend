@@ -24,3 +24,4 @@ const purchaseController = new PurchasesController(
 
 purchaseRouter.post("/", purchaseController.createPurchase)
 purchaseRouter.get("/:id", purchaseController.getPurchases)
+purchaseRouter.delete("/:id", purchaseController.deletePurchase)

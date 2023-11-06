@@ -11,6 +11,9 @@ import { PurchasesProducts } from "../models/PurchasesProducts";
 import { PurchasesProductsDatabase } from "../database/PurchasesProductsDatabase";
 import { BadRequestError } from "../errors/BadRequestError";
 import { GetPurchaseInputDTO, GetPurchaseOutputDTO } from "../dtos/purchasesDtos/getPurchase.dto";
+import { DeletePurchaseInputDTO, DeletePurchaseOutputDTO } from "../dtos/purchasesDtos/deletePurchase.dto";
+import { DeleteProductOutputDTO } from "../dtos/productsDtos/deleteProduct.dto";
+import { ForbiddenError } from "../errors/ForbiddenError";
 
 export class PurchaseBusiness {
     constructor(
@@ -102,6 +105,32 @@ export class PurchaseBusiness {
         }
 
         const output: CreatePurchaseOutputDTO = undefined
+
+        return output
+    }
+
+    public deletePurchase = async (input: DeletePurchaseInputDTO): Promise<DeleteProductOutputDTO> => {
+        const {purchase_id, token} = input
+
+        const payload = this.tokenManager.getPayload(token)
+
+        if (!payload) {
+            throw new UnauthorizedError()
+        }
+
+        const purchaseIdExists = await this.purchaseDatabase.findPurchase(purchase_id)
+
+        if(!purchaseIdExists) {
+            throw new NotFoundError("Essa compra não existe")
+        }
+
+        if(payload.id !== purchaseIdExists.buyer) {
+            throw new ForbiddenError("Somente o dono da compra pode exclui-la")
+        }
+
+        await this.purchaseDatabase.deletePurchase(purchase_id)
+
+        const output: DeletePurchaseOutputDTO = undefined
 
         return output
     }
